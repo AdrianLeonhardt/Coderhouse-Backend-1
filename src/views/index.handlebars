@@ -1,0 +1,10 @@
+<h1>Aca voy a mostrar mis productos y trabajar con express handlebars</h1>
+
+{{#each  productos}}
+    <div>
+        <p>{{this.title}}</p>
+        <p>{{this.description}}</p>
+        <p>{{this.price}}</p>
+    </div>
+    <hr>
+{{/each}}
