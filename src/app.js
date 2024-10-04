@@ -4,6 +4,7 @@ import cartRoutes from "./routes/cartRoutes.js";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/viewsRouter.js";
+import ProductManager from "./managers/productManager.js";
 
 const app = express();
 const puerto = 8080;
@@ -42,14 +43,28 @@ const httpServer = app.listen(puerto, ()=>{
 //Iniciamos el servidor Socket.io
 const io = new Server(httpServer);
 
-io.on("connection", (socket)=>{
-    console.log("Un cliente se conecto");
 
-    // // Ejemplo de enviar un mensaje al cliente
-    // socket.emit("mensaje", "¡Bienvenido al servidor!");
+//Obtenemos el array de productos
+const manager = new ProductManager("./src/data/products.json");
 
-    // // Ejemplo de recibir un mensaje del cliente
-    // socket.on("mensajeDesdeCliente", (data) => {
-    //     console.log(data);
-    // });
+io.on("connection", async (socket)=>{
+    console.log(`Un cliente ${socket.id} se conecto`);
+
+    //Pasamos el array de productos por socket
+    socket.emit("products", await manager.getProducts());
+
+    // Manejamos la eliminación de productos
+    socket.on("deleteProduct", async (id) => {
+        await manager.deleteProduct(id); 
+        const updatedProducts = await manager.getProducts();
+        io.emit("products", updatedProducts); 
+    });
+
+    // Manejamos la creación de productos
+    socket.on("addProduct", async (product) => {
+        await manager.addProduct(product);
+        const updatedProducts = await manager.getProducts();
+        io.emit("products", updatedProducts);
+    });
+
 })

@@ -5,7 +5,7 @@ import ProductManager from "../managers/productManager.js";
 
 const manager = new ProductManager("./src/data/products.json");
 
-//Punto 1 
+//Punto 1 Handlebars
 
 router.get("/products", async (request, response) => {
 

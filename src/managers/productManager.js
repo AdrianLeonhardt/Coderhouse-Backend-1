@@ -40,9 +40,9 @@ class ProductManager {
     }
 
     // Agrega un nuevo producto al array y guarda los cambios
-    async addProduct({ title, description, code, price, status, stock, category, thumbnails }) {
-        // Validamos que se ingresen todos los campos
-        if (!title || !description || !code || !price || status === undefined || !stock || !category || !thumbnails) {
+    async addProduct({ title, description, code, price, status, stock, category, thumbnails = '' }) {
+        // Validamos que se ingresen todos los campos menos imagen
+        if (!title || !description || !code || !price || status === undefined || !stock || !category) {
             console.log("Necesitamos que completes todos los campos");
             return;
         }
@@ -88,21 +88,21 @@ class ProductManager {
     // Actualiza un producto existente
     async updateProduct(id, updatedProduct) {
         const index = this.products.findIndex(item => item.id === id);
-        if (index === -1) throw new Error("Not found"); // Error si el producto no existe
+        if (index === -1) throw new Error("Not found"); 
 
         // Actualiza los campos sin cambiar el ID
         this.products[index] = { ...this.products[index], ...updatedProduct };
-        await this.guardarArchivo(this.products); // Guarda los cambios en el archivo
+        await this.guardarArchivo(this.products); 
     }
 
     // Elimina un producto por ID
     async deleteProduct(id) {
-        const index = this.products.findIndex(item => item.id === id);
-        if (index === -1) throw new Error("Not found"); // Error si el producto no existe
+        const index = this.products.findIndex(item => item.id === parseInt(id));
+        if (index === -1) throw new Error("Not found"); 
 
         this.products.splice(index, 1); // Elimina el producto del array
-        await this.guardarArchivo(this.products); // Guarda los cambios en el archivo
+        await this.guardarArchivo(this.products); 
     }
 }
 
-export default ProductManager; // Exporta la clase para su uso en otras partes
+export default ProductManager;
