@@ -22,7 +22,7 @@ const renderProductos = (products) => {
             <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">${element.title}</h5>
-                    <p class="card-text">"ID"${element.id}</p>
+                    <p class="card-text">"ID"${element._id}</p>
                     <p class="card-text">${element.description}</p>
                     <p class="card-text"><strong>Código:</strong> ${element.code}</p>
                     <p class="card-text"><strong>Precio:</strong> $${element.price}</p>
@@ -61,5 +61,3 @@ const agregarProducto = () => {
     // Limpiar el formulario después de enviar
     document.getElementById("productForm").reset();
 };
-
-

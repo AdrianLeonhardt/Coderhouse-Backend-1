@@ -1,119 +1,99 @@
 [
-  {
-    "id": 1,
-    "title": "Bicicleta de Montaña",
-    "description": "Robusta y resistente, ideal para senderos.",
-    "code": "MTB001",
-    "price": 600,
-    "status": true,
-    "stock": 10,
-    "category": "Montaña",
-    "thumbnails": [
-      "ruta/a/imagen1.jpg"
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Bicicleta de Ruta",
-    "description": "Ligera y rápida, perfecta para carreteras.",
-    "code": "RUTA002",
-    "price": 700,
-    "status": true,
-    "stock": 15,
-    "category": "Ruta",
-    "thumbnails": [
-      "ruta/a/imagen2.jpg"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "Bicicleta Híbrida",
-    "description": "Combina características de bicicletas de montaña y ruta.",
-    "code": "HIB003",
-    "price": 550,
-    "status": true,
-    "stock": 20,
-    "category": "Híbrida",
-    "thumbnails": [
-      "ruta/a/imagen3.jpg"
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Bicicleta de Paseo",
-    "description": "Confortable y perfecta para paseos por la ciudad.",
-    "code": "PASEO004",
-    "price": 450,
-    "status": true,
-    "stock": 12,
-    "category": "Paseo",
-    "thumbnails": [
-      "ruta/a/imagen4.jpg"
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Bicicleta de Competencia",
-    "description": "Diseñada para el rendimiento en competencias.",
-    "code": "COMP005",
-    "price": 1200,
-    "status": true,
-    "stock": 5,
-    "category": "Competencia",
-    "thumbnails": [
-      "ruta/a/imagen5.jpg"
-    ]
-  },
-  {
-    "id": 6,
-    "title": "Bicicleta para Niños",
-    "description": "Segura y divertida para los más pequeños.",
-    "code": "NINO006",
-    "price": 200,
-    "status": true,
-    "stock": 25,
-    "category": "Niños",
-    "thumbnails": [
-      "ruta/a/imagen6.jpg"
-    ]
-  },
-  {
-    "id": 7,
-    "title": "Bicicleta Eléctrica",
-    "description": "Con asistencia eléctrica para un pedaleo más fácil.",
-    "code": "ELECT007",
-    "price": 1500,
-    "status": true,
-    "stock": 8,
-    "category": "Eléctrica",
-    "thumbnails": [
-      "ruta/a/imagen7.jpg"
-    ]
-  },
-  {
-    "id": 8,
-    "title": "Bicicleta de BMX",
-    "description": "Ideal para acrobacias y saltos.",
-    "code": "BMX008",
-    "price": 350,
-    "status": true,
-    "stock": 18,
-    "category": "BMX",
-    "thumbnails": [
-      "ruta/a/imagen8.jpg"
-    ]
-  },
-  {
-    "id": 9,
-    "title": "Bicicleta de Touring",
-    "description": "Perfecta para viajes largos y aventuras.",
-    "code": "TOUR009",
-    "price": 900,
-    "status": true,
-    "stock": 7,
-    "category": "Touring",
-    "thumbnails": [
-      "ruta/a/imagen9.jpg"
-    ]
-  }
-]
+    {
+      "title": "Bicicleta de Montaña",
+      "description": "Robusta y resistente, ideal para senderos.",
+      "code": "MTB001",
+      "price": 600,
+      "status": true,
+      "stock": 10,
+      "category": "Montaña",
+      "thumbnails": [
+        "ruta/a/imagen1.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta de Ruta",
+      "description": "Ligera y rápida, perfecta para carreteras.",
+      "code": "RUTA002",
+      "price": 700,
+      "status": true,
+      "stock": 15,
+      "category": "Ruta",
+      "thumbnails": [
+        "ruta/a/imagen2.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta Híbrida",
+      "description": "Combina características de bicicletas de montaña y ruta.",
+      "code": "HIB003",
+      "price": 550,
+      "status": true,
+      "stock": 20,
+      "category": "Híbrida",
+      "thumbnails": [
+        "ruta/a/imagen3.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta de Paseo",
+      "description": "Confortable y perfecta para paseos por la ciudad.",
+      "code": "PASEO004",
+      "price": 450,
+      "status": true,
+      "stock": 12,
+      "category": "Paseo",
+      "thumbnails": [
+        "ruta/a/imagen4.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta de Competencia",
+      "description": "Diseñada para el rendimiento en competencias.",
+      "code": "COMP005",
+      "price": 1200,
+      "status": true,
+      "stock": 5,
+      "category": "Competencia",
+      "thumbnails": [
+        "ruta/a/imagen5.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta para Niños",
+      "description": "Segura y divertida para los más pequeños.",
+      "code": "NINO006",
+      "price": 200,
+      "status": true,
+      "stock": 25,
+      "category": "Niños",
+      "thumbnails": [
+        "ruta/a/imagen6.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta Eléctrica",
+      "description": "Con asistencia eléctrica para un pedaleo más fácil.",
+      "code": "ELECT007",
+      "price": 1500,
+      "status": true,
+      "stock": 8,
+      "category": "Eléctrica",
+      "thumbnails": [
+        "ruta/a/imagen7.jpg"
+      ]
+    },
+    {
+      "title": "Bicicleta de BMX",
+      "description": "Ideal para acrobacias y saltos.",
+      "code": "BMX008",
+      "price": 350,
+      "status": true,
+      "stock": 18,
+      "category": "BMX",
+      "thumbnails": [
+        "ruta/a/imagen8.jpg"
+      ]
+    }
+  ]
+  

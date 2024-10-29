@@ -1,36 +1,42 @@
 import express from "express";
-import productRoutes from "./routes/productRoutes.js";
-import cartRoutes from "./routes/cartRoutes.js";
 import { engine } from "express-handlebars";
+//import multer from "multer";
+import cartRouter from "./routes/cart.router.js"
+import productRouter from "./routes/product.router.js"
+import viewsRouter from "./routes/views.router.js"
+import mongoose from "mongoose";
 import { Server } from "socket.io";
-import viewsRouter from "./routes/viewsRouter.js";
 import ProductManager from "./managers/productManager.js";
+
+
+//Me conecto a la base de datos de Atlas
+mongoose.connect("mongodb+srv://adrianleonhardt:coderhouse@codercluster.r53qw.mongodb.net/Backend_1-Entrega_final?retryWrites=true&w=majority&appName=Codercluster")
+    .then(()=>{
+        console.log("Conectado a MongoDB")
+    })
+    .catch((error)=>{
+        console.log("Hay un error: ",error)
+    })
+
 
 const app = express();
 const puerto = 8080;
 
-//Verificamos que este funcionando el servidor
-//Configura una ruta GET en la raíz ("/") que responde con el texto "probando servidor".
-app.get("/", (request, response)=>{
-    response.send("probando servidor");
-})
 
 //Middleware
-//Le decimos al servidor que vamos a trabajar con JSON
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.static("./src/public"));
 
-
 //Express-Handlebars
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', './src/views');
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", "./src/views");
 
 
-//Rutas
-app.use("/api/products", productRoutes);
-app.use("/api/carts", cartRoutes);
+//Rutas para ver desde la URL
+app.use("/api/carts", cartRouter);
+app.use("/api/products", productRouter);
 app.use("/", viewsRouter);
 
 
@@ -39,32 +45,53 @@ const httpServer = app.listen(puerto, ()=>{
     console.log(`Servidor funcionando en ${puerto}`);
 })
 
-
 //Iniciamos el servidor Socket.io
 const io = new Server(httpServer);
 
+// Crea una instancia de ProductManager
+const manager = new ProductManager();
 
-//Obtenemos el array de productos
-const manager = new ProductManager("./src/data/products.json");
-
-io.on("connection", async (socket)=>{
-    console.log(`Un cliente ${socket.id} se conecto`);
+// Manejo de eventos de Socket.io
+io.on("connection", async (socket) => {
+    console.log(`El cliente de socket id : ${socket.id} se conectó`);
 
     //Pasamos el array de productos por socket
-    socket.emit("products", await manager.getProducts());
+    // socket.emit("products", await manager.getProducts());
+    try {
+        // Pasamos el array de productos por socket
+        const productos = await manager.getProducts();
+        socket.emit("products", productos);
+    } catch (error) {
+        console.error("Error al obtener productos:", error);
+        socket.emit("products", []); // Envia un array vacío si hay error
+    }
 
-    // Manejamos la eliminación de productos
     socket.on("deleteProduct", async (id) => {
-        await manager.deleteProduct(id); 
-        const updatedProducts = await manager.getProducts();
-        io.emit("products", updatedProducts); 
+        console.log("Intentando eliminar producto con ID:", id);
+        try {
+            await manager.deleteProduct(id);
+            const updatedProducts = await manager.getProducts();
+            io.emit("products", updatedProducts);
+        } catch (error) {
+            console.error("Error al eliminar producto:", error);
+        }
     });
+    
 
     // Manejamos la creación de productos
     socket.on("addProduct", async (product) => {
-        await manager.addProduct(product);
-        const updatedProducts = await manager.getProducts();
-        io.emit("products", updatedProducts);
+        try {
+            await manager.addProduct(product);
+            const updatedProducts = await manager.getProducts();
+            io.emit("products", updatedProducts);
+        } catch (error) {
+            console.error("Error al agregar producto:", error);
+        }
     });
 
-})
+
+    // Manejo de desconexión
+    socket.on("disconnect", () => {
+        console.log(`Un cliente ${socket.id} se desconectó`);
+    });
+});

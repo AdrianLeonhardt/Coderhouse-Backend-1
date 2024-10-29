@@ -1,79 +1,84 @@
-import { promises as fs } from "fs";
+import CartModel from '../models/cart.model.js'; // Asegúrate de tener la ruta correcta
 
 class CartManager {
-    constructor(path) {
-        this.path = path;
-        this.carts = [];
-        this.ultId = 0;
-
-        // Cargar los carritos almacenados en el archivo
-        this.cargarCarritos();
-    }
-
-    async cargarCarritos() {
-        try {
-            const data = await fs.readFile(this.path, "utf-8");
-            this.carts = JSON.parse(data);
-            if (this.carts.length > 0) {
-                // Calcular el último ID
-                this.ultId = Math.max(...this.carts.map(cart => cart.id));
-            }
-        } catch (error) {
-            console.log("Error al cargar el carrito", error);
-            // Si no existe el archivo, lo voy a crear
-            await this.guardarCarritos();
-        }
-    }
-
-    async guardarCarritos() {
-        await fs.writeFile(this.path, JSON.stringify(this.carts, null, 2));
-    }
-
     // Método para crear un carrito
     async crearCarrito() {
-        const nuevoCarrito = {
-            id: ++this.ultId,
-            products: []
-        };
-
-        // Agregar el nuevo carrito al array
-        this.carts.push(nuevoCarrito);
-        await this.guardarCarritos(); // Guardar cambios en el archivo
-        return nuevoCarrito; // Retornar el nuevo carrito
+        const nuevoCarrito = new CartModel(); // Crea un nuevo carrito
+        await nuevoCarrito.save(); // Guarda en MongoDB
+        return nuevoCarrito; // Retorna el nuevo carrito
     }
 
+    // Método para obtener todos los carritos
+    async getCarritos() {
+        return await CartModel.find(); 
+    }
+
+    // Método para obtener un carrito por ID
     async getCarritoById(carritoId) {
-        const carritoBuscado = this.carts.find(carrito => carrito.id === carritoId);
+        const carritoBuscado = await CartModel.findById(carritoId).populate("products.product");
         if (!carritoBuscado) {
             throw new Error("No existe un carrito con ese id");
         }
         return carritoBuscado;
     }
 
-    //Comentado para probar
+    // Método para agregar un producto al carrito
     async agregarProductoAlCarrito(carritoId, productoId, quantity = 1) {
         const carrito = await this.getCarritoById(carritoId);
-        const existeProducto = carrito.products.find(producto => producto.product === productoId);
+        const existeProducto = carrito.products.find(producto => producto.product.toString() === productoId);
 
-        // Verificar si el producto ya está en el carrito
         if (existeProducto) {
-            existeProducto.quantity += quantity; // Incrementar la cantidad
+            existeProducto.quantity += quantity; 
         } else {
             carrito.products.push({ product: productoId, quantity }); // Agregar nuevo producto
         }
 
-        // Guardar cambios en el archivo
-        await this.guardarCarritos();
-        return carrito; // Retornar el carrito actualizado
+        await carrito.save(); 
+        return carrito; 
+    }
+
+    // Método para eliminar un producto del carrito
+    async eliminarProductoDelCarrito(carritoId, productoId) {
+        const carrito = await this.getCarritoById(carritoId);
+        carrito.products = carrito.products.filter(p => p.product.toString() !== productoId);
+        await carrito.save(); 
+        return carrito; 
+    }
+
+    // Método para vaciar el carrito
+    async vaciarCarrito(carritoId) {
+        const carrito = await this.getCarritoById(carritoId);
+        carrito.products = []; 
+        await carrito.save(); 
+        return carrito; 
+    }
+
+    // Método para actualizar todos los productos del carrito
+    async actualizarProductosDelCarrito(carritoId, productos) {
+        const carrito = await CartModel.findById(carritoId);
+        if (!carrito) {
+            throw new Error("Carrito no encontrado");
+        }
+
+        carrito.products = productos; // Actualiza todos los productos
+        await carrito.save(); 
+        return carrito; 
+    }
+
+    // Método para actualizar solo la cantidad de un producto en el carrito
+    async actualizarCantidadProducto(carritoId, productoId, quantity) {
+        const carrito = await this.getCarritoById(carritoId);
+        const producto = carrito.products.find(p => p.product.toString() === productoId);
+
+        if (!producto) {
+            throw new Error("Producto no encontrado en el carrito");
+        }
+
+        producto.quantity = quantity; 
+        await carrito.save();
+        return carrito; 
     }
 }
 
 export default CartManager;
 
-
-//
-// Crear un Carrito: Envía una solicitud POST a /api/carts para crear un nuevo carrito. Deberías ver el carrito en la respuesta y también en carts.json.
-
-//Obtener Carrito por ID: Después de crear un carrito, utiliza el ID devuelto para hacer una solicitud GET a /api/carts/{id}. Deberías obtener los productos que contiene.
-
-// Agregar Producto al Carrito: Envía una solicitud POST a /api/carts/{id}/product/{productId} con el cuerpo { "quantity": 1 }. Asegúrate de que el producto ya existe o simula su creación si es necesario.
