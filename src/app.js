@@ -7,10 +7,13 @@ import viewsRouter from "./routes/views.router.js"
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import ProductManager from "./managers/productManager.js";
+import dotenv from 'dotenv'; 
 
+ //Cargamos las variables de entorno
+dotenv.config();
 
 //Me conecto a la base de datos de Atlas
-mongoose.connect("mongodb+srv://adrianleonhardt:coderhouse@codercluster.r53qw.mongodb.net/Backend_1-Entrega_final?retryWrites=true&w=majority&appName=Codercluster")
+mongoose.connect(process.env.MONGODB_URI)
     .then(()=>{
         console.log("Conectado a MongoDB")
     })
