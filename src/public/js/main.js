@@ -30,7 +30,8 @@ const renderProductos = (products) => {
                     <p class="card-text"><strong>Stock:</strong> ${element.stock}</p>
                     <p class="card-text"><strong>Categoría:</strong> ${element.category}</p>
                     <p class="card-text"><strong>Thumbnails:</strong> ${element.thumbnails}</p>
-                    <button class="btn btn-danger" onclick="eliminarProducto(${element.id})">Eliminar</button>
+                    <button class="btn btn-danger" onclick="eliminarProducto('${element._id}')">Eliminar</button>
+
                 </div>
             </div>
         `;

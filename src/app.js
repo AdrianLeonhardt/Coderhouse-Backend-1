@@ -69,15 +69,16 @@ io.on("connection", async (socket) => {
         socket.emit("products", []); // Envia un array vacío si hay error
     }
 
+    // Manejamos la eliminación de productos
     socket.on("deleteProduct", async (id) => {
-        console.log("Intentando eliminar producto con ID:", id);
         try {
-            await manager.deleteProduct(id);
-            const updatedProducts = await manager.getProducts();
-            io.emit("products", updatedProducts);
+            await manager.deleteProduct(id); 
+        const updatedProducts = await manager.getProducts();
+        io.emit("products", updatedProducts);
         } catch (error) {
-            console.error("Error al eliminar producto:", error);
+            console.error("Error al eliminar un producto:", error);
         }
+         
     });
     
 
