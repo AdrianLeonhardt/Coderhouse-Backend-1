@@ -8,7 +8,7 @@ class ProductManager {
     }
 
     async getProducts() {
-        return await ProductModel.find(); // Retorna todos los productos de la base de datos
+        return await ProductModel.find().lean(); // Retorna todos los productos de la base de datos
     }
 
     async getProductById(id) {

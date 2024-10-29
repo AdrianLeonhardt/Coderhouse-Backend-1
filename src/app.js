@@ -9,7 +9,7 @@ import { Server } from "socket.io";
 import ProductManager from "./managers/productManager.js";
 import dotenv from 'dotenv'; 
 
- //Cargamos las variables de entorno
+//Cargamos las variables de entorno
 dotenv.config();
 
 //Me conecto a la base de datos de Atlas
