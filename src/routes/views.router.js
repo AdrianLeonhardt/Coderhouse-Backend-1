@@ -5,7 +5,7 @@ import ProductModel from "../models/product.model.js";
 const router = Router();
 const manager = new ProductManager();
 
- //Renderizado con Handlebars
+//Renderizado con Handlebars
 
 // router.get("/products", async (request, response) => {
 //      //Recuperamos datos del manager
@@ -17,11 +17,11 @@ router.get("/products", async (request, response) => {
     let page = request.query.page || 1;
     let limit = 3;
     try {
-        const productosListado = await ProductModel.paginate({}, {limit, page});
+        const productosListado = await ProductModel.paginate({}, { limit, page });
 
         //Traemos el array de docs 
         const productosFinal = productosListado.docs.map(producto => {
-            const {_id, ...rest} = producto.toObject();
+            const { _id, ...rest } = producto.toObject();
             return rest;
         });
 
@@ -41,11 +41,14 @@ router.get("/products", async (request, response) => {
     }
 })
 
+router.get("/carts", async (request, response) => {
+    response.render("carts");
+})
 
 //Renderizado Web socket
 
- router.get("/realtimeproducts", async (request, response)=>{
-     response.render("realtimeproducts");
- })
+router.get("/realtimeproducts", async (request, response) => {
+    response.render("realtimeproducts");
+})
 
- export default router;
+export default router;

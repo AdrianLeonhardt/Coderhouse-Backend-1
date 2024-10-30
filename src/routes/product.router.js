@@ -25,7 +25,26 @@ const router = Router();
 router.get("/", async (request, response) => {
     try {
         const productos = await productManager.getProducts();
-        response.status(200).send(productos);
+        
+        //Query para ordenar la consulta "order por precio"
+        //api/products/?order=asc o api/products/?order=desc
+
+        //Usamos la variable destructurada {order} para llamarla sin hacer "request.query.body"
+        const {order} = request.query;
+
+        //Condicional para evaluar si tipea order = asc o desc
+        const sortProductos = productos.sort((a, b) => {
+            if (order === "asc") {
+                return (a.price - b.price);
+            } else if (order === "desc") {
+                return (b.price - a.price);
+            } 
+        });
+
+        // response.status(200).send(productos);
+
+        response.status(200).send(sortProductos);
+
     } catch (error) {
         console.error("Error al obtener productos:", error); // Muestra el error en la consola
         response.status(500).send({ message: "Error interno del servidor", error: error.message });

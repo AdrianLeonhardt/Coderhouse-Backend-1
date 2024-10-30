@@ -79,3 +79,8 @@ main {
 a { 
     color: #00ffbb;
 }
+
+a:hover { 
+    color: white;
+    text-decoration: none;
+}
