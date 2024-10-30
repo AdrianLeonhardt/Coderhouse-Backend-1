@@ -7,6 +7,7 @@ import viewsRouter from "./routes/views.router.js"
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import ProductManager from "./managers/productManager.js";
+import CartManager from "./managers/cartManager.js";
 import dotenv from 'dotenv'; 
 
 //Cargamos las variables de entorno
@@ -51,17 +52,16 @@ const httpServer = app.listen(puerto, ()=>{
 //Iniciamos el servidor Socket.io
 const io = new Server(httpServer);
 
-// Crea una instancia de ProductManager
+// Crea una instancia de ProductManager y CartManager
 const manager = new ProductManager();
+const cartManager = new CartManager();
 
 // Manejo de eventos de Socket.io
 io.on("connection", async (socket) => {
     console.log(`El cliente de socket id : ${socket.id} se conectó`);
 
     //Pasamos el array de productos por socket
-    // socket.emit("products", await manager.getProducts());
     try {
-        // Pasamos el array de productos por socket
         const productos = await manager.getProducts();
         socket.emit("products", productos);
     } catch (error) {
@@ -78,10 +78,8 @@ io.on("connection", async (socket) => {
         } catch (error) {
             console.error("Error al eliminar un producto:", error);
         }
-         
     });
     
-
     // Manejamos la creación de productos
     socket.on("addProduct", async (product) => {
         try {
@@ -93,6 +91,16 @@ io.on("connection", async (socket) => {
         }
     });
 
+    //Manejamos el array de carrito por ID
+    socket.on ("addtoCart", async (carritoId) => {
+        try {
+            await cartManager.agregarProductoAlCarrito(carritoId);
+            const updateCarts = await cartManager.getCarritoById();
+            io.emit("carts", updateCarts);
+        } catch (error) {
+            console.error("Error al agregar producto al carrito:", error);
+        }
+    });
 
     // Manejo de desconexión
     socket.on("disconnect", () => {

@@ -1,9 +1,10 @@
 import { request, response, Router } from "express";
-import ProductManager from "../managers/productManager.js";
+//import ProductManager from "../managers/productManager.js";
 import ProductModel from "../models/product.model.js";
+import CartModel from "../models/cart.model.js";
 
 const router = Router();
-const manager = new ProductManager();
+//const manager = new ProductManager();
 
 //Renderizado con Handlebars
 
@@ -34,21 +35,36 @@ router.get("/products", async (request, response) => {
             currentPage: productosListado.page,
             totalPages: productosListado.totalPages
         });
-
+        
     } catch (error) {
         console.log(error);
         response.status(500).send("Error del servidor")
     }
 })
 
-router.get("/carts", async (request, response) => {
-    response.render("carts");
-})
 
 //Renderizado Web socket
 
+//Renderizado de productos en tiempo real
 router.get("/realtimeproducts", async (request, response) => {
     response.render("realtimeproducts");
+})
+
+//Renderizado del carrito
+router.get("/carts", async (request, response) => {
+    try {
+        const cartId = request.query.cartId;
+        const cart = await CartModel.findById(cartId).populate("products.product").lean();
+        
+        if (!cart) {
+            return response.status(404).send("Carrito no encontrado");
+        }
+
+        response.render("carts", {cart});
+    } catch (error) {
+        console.log(error);
+        response.status(500).send("Error del servidor")
+    }
 })
 
 export default router;

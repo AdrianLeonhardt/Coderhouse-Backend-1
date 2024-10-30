@@ -43,7 +43,9 @@
                             <p class="card-text"><strong>Stock: </strong>{{this.stock}}</p>
                             <p class="card-text"><strong>Precio: ${{this.price}}</strong></p>
                             <p class="card-text">{{this.thumbnails}}</p>
-                            <a href="#" class="btn btn-success">Agregar al carrito</a>
+                            <a href="/carts" class="btn btn-success">Agregar al carrito</a>
+                            {{!-- <button class="btn btn-success" onclick="agregarAlCarrito('{{this._id}}')">Agregar al carrito</button> --}}
+                            
                         </div>
                     </div>
                 </div>
@@ -72,6 +74,7 @@
         </footer>
 
     </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

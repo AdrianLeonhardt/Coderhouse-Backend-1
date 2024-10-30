@@ -31,7 +31,6 @@ const renderProductos = (products) => {
                     <p class="card-text"><strong>Categoría:</strong> ${element.category}</p>
                     <p class="card-text"><strong>Thumbnails:</strong> ${element.thumbnails}</p>
                     <button class="btn btn-danger" onclick="eliminarProducto('${element._id}')">Eliminar</button>
-
                 </div>
             </div>
         `;
@@ -62,3 +61,8 @@ const agregarProducto = () => {
     // Limpiar el formulario después de enviar
     document.getElementById("productForm").reset();
 };
+
+//Funcion para agregar un producto al carrito por ID
+const agregarProductoAlCarrito =  () => {
+    
+}
