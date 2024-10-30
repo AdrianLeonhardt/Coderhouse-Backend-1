@@ -2,6 +2,7 @@ import { request, response, Router } from "express";
 //import ProductModel from "../models/product.model.js";
 import ProductManager from "../managers/productManager.js";
 
+
 const productManager = new ProductManager();
 const router = Router();
 
@@ -48,12 +49,12 @@ router.get("/", async (request, response) => {
 
 // Ruta para obtener un producto específico por ID
 router.get("/:id", async (request, response) => {
-     const { id } = request.params;
-     try {
-         const productBuscado = await productManager.getProductById(id);
-         response.status(200).send(productBuscado);
-     } catch (error) {
-         response.status(404).send({ message: error.message });
+    const { id } = request.params;
+    try {
+        const productBuscado = await productManager.getProductById(id);
+        response.status(200).send(productBuscado);
+    } catch (error) {
+        response.status(404).send({ message: error.message });
     }
 });
 

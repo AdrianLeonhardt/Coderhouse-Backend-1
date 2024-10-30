@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import moongoosePaginate from "mongoose-paginate-v2";
 
 // const nombreCollection = "products";
 
@@ -12,6 +13,9 @@ const productSchema = new mongoose.Schema({
     category: String,
     thumbnails: String
 })
+
+//Primero ponemos el plugin para instanciar Paginate
+productSchema.plugin(moongoosePaginate);
 
 //Definimos el modelo: 
 //Le pasamos el nombre de la colección como primer parametro y el segundo el schema donde se configura el documento. 
