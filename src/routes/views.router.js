@@ -51,20 +51,36 @@ router.get("/realtimeproducts", async (request, response) => {
 })
 
 //Renderizado del carrito
-router.get("/carts", async (request, response) => {
+// router.get("/carts", async (request, response) => {
+//     try {
+//         const cartId = request.query.cartId;
+//         const cart = await CartModel.findById(cartId).populate("products.product").lean();
+        
+//         if (!cart) {
+//             return response.status(404).send("Carrito no encontrado");
+//         }
+
+//         response.render("carts", {cart});
+//     } catch (error) {
+//         console.log(error);
+//         response.status(500).send("Error del servidor")
+//     }
+// })
+
+router.get("/carts/:cid", async (request, response) => {
     try {
-        const cartId = request.query.cartId;
+        const cartId = request.params.cid; // Obtenemos el ID del carrito desde la URL
         const cart = await CartModel.findById(cartId).populate("products.product").lean();
         
         if (!cart) {
             return response.status(404).send("Carrito no encontrado");
         }
 
-        response.render("carts", {cart});
+        response.render("carts", { cart });
     } catch (error) {
         console.log(error);
-        response.status(500).send("Error del servidor")
+        response.status(500).send("Error del servidor");
     }
-})
+});
 
 export default router;
