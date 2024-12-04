@@ -3,11 +3,16 @@ import { engine } from "express-handlebars";
 //import multer from "multer";
 import cartRouter from "./routes/cart.router.js"
 import productRouter from "./routes/product.router.js"
+import sessionsRouter from "./routes/sessions.router.js"
 import viewsRouter from "./routes/views.router.js"
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import ProductManager from "./managers/productManager.js";
 import CartManager from "./managers/cartManager.js";
+import cookieParser from "cookie-parser";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
+
 import dotenv from 'dotenv'; 
 
 //Cargamos las variables de entorno
@@ -31,6 +36,9 @@ const puerto = 8080;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("./src/public"));
+app.use(cookieParser());
+app.use(passport.initialize());
+initializePassport();
 
 //Express-Handlebars
 app.engine("handlebars", engine());
@@ -41,10 +49,11 @@ app.set("views", "./src/views");
 //Rutas para ver desde la URL
 app.use("/api/carts", cartRouter);
 app.use("/api/products", productRouter);
+app.use("/api/sessions", sessionsRouter);
 app.use("/", viewsRouter);
 
 
-//Inicia el servidor Express y hace que escuche en el puerto especificado, mostrando un mensaje en la consola cuando el servidor está funcionando.
+//Inicia el servidor Express y hace que escuche en el puerto especificado.
 const httpServer = app.listen(puerto, ()=>{
     console.log(`Servidor funcionando en ${puerto}`);
 })

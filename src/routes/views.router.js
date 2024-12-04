@@ -83,4 +83,14 @@ router.get("/carts/:cid", async (request, response) => {
     }
 });
 
+//Vista de rutas de login y register
+router.get("/login", async (request, response)=>{
+    response.render("login");
+});
+
+router.get("/register", async (request, response)=>{
+    response.render("register");
+});
+
+
 export default router;
