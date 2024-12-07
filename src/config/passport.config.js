@@ -4,8 +4,10 @@
 //2) Importamos passport y jwt: 
 
 import passport from "passport";
-import jwt from "passport-jwt"; 
+import jwt from "passport-jwt";
+import dotenv from "dotenv"; 
 
+dotenv.config();
 
 const JWTStrategy = jwt.Strategy; 
 const ExtractJwt = jwt.ExtractJwt; 
@@ -24,7 +26,7 @@ const cookieExtractor = req => {
 const initializePassport = () => {
     passport.use("current", new JWTStrategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]), 
-        secretOrKey: "coderhouse", 
+        secretOrKey: process.env.JWT_SECRET_KEY, 
         //palabra secreta que se puede cambiar
     }, async (jwt_payload, done) => {
         try {
