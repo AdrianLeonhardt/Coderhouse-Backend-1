@@ -80,7 +80,7 @@ router.post("/login", async (request,response) => {
             role: userFinded.role,
             cart: userFinded.cart}, 
             process.env.JWT_SECRET_KEY, {expiresIn: "1h"});
-        // console.log(userFinded); 
+        //console.log(userFinded); 
 
         //Estabecemos el token en la cookie
         response.cookie("preEntregaToken", token, {
@@ -106,6 +106,7 @@ router.get("/current", passport.authenticate("current", { session: false }), (re
         
         response.render("home", { 
             user: request.user.user,
+            role: request.user.role,
             email: request.user.email,
             cartId: userCartId  
         });
