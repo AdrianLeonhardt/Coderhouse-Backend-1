@@ -39,7 +39,7 @@ router.post("/register", async (request, response) => {
             email: newUser.email, 
             rol: newUser.role,
             cart: newUser.cart}, 
-            "coderhouse", {expiresIn: "1h"});
+            process.env.JWT_SECRET_KEY, {expiresIn: "1h"});
 
         //Redireccionamos con la cookie
         response.cookie("preEntregaToken", token, {
@@ -79,7 +79,7 @@ router.post("/login", async (request,response) => {
             email: userFinded.email, 
             role: userFinded.role,
             cart: userFinded.cart}, 
-            "coderhouse", {expiresIn: "1h"});
+            process.env.JWT_SECRET_KEY, {expiresIn: "1h"});
         // console.log(userFinded); 
 
         //Estabecemos el token en la cookie
