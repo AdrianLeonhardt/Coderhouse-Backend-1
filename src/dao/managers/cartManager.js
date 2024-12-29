@@ -1,11 +1,11 @@
-import CartModel from '../models/cart.model.js'; // Asegúrate de tener la ruta correcta
+import CartModel from '../models/cart.model.js';
 
 class CartManager {
     // Método para crear un carrito
     async crearCarrito() {
-        const nuevoCarrito = new CartModel(); // Crea un nuevo carrito
+        const nuevoCarrito = new CartModel();
         await nuevoCarrito.save(); // Guarda en MongoDB
-        return nuevoCarrito; // Retorna el nuevo carrito
+        return nuevoCarrito; 
     }
 
     // Método para obtener todos los carritos

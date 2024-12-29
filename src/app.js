@@ -7,8 +7,8 @@ import sessionsRouter from "./routes/sessions.router.js"
 import viewsRouter from "./routes/views.router.js"
 import mongoose from "mongoose";
 import { Server } from "socket.io";
-import ProductManager from "./managers/productManager.js";
-import CartManager from "./managers/cartManager.js";
+import ProductManager from "./dao/managers/productManager.js";
+import CartManager from "./dao/managers/cartManager.js";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";

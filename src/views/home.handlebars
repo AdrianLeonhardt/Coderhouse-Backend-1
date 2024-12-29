@@ -17,10 +17,10 @@
                     <div class="card-body">
                         <h3 class="card-title text-center mb-3">Mi Perfil</h3>
 
-                        <p class="card-text"><strong>Bienvenido:</strong> {{user}}</p>
-                        <p class="card-text"><strong>Tu rol es:</strong> {{role}}</p>
-                        <p class="card-text"><strong>Email:</strong> {{email}}</p>
-                        <p class="card-text"><strong>Número de carrito:</strong> {{cartId}}</p>
+                        <p class="card-text"><strong>Bienvenido:</strong> {{user.name}}</p>
+                        {{!-- <p class="card-text"><strong>Tu rol es:</strong> {{user.rol}}</p> --}}
+                        <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
+                        <p class="card-text"><strong>Número de carrito:</strong> {{user.cart}}</p>
                     </div>
                     <form action="/api/sessions/logout" method="post">
                         <button type="submit" class="btn btn-primary w-100">Cerrar Sesion</button>

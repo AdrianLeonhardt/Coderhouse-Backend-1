@@ -1,20 +1,13 @@
 import { request, response, Router } from "express";
-//import ProductManager from "../managers/productManager.js";
-import ProductModel from "../models/product.model.js";
-import CartModel from "../models/cart.model.js";
+import ProductModel from "../dao/models/product.model.js";
+import CartModel from "../dao/models/cart.model.js";
+
+import { role } from "../middleware/auth.js";
+import passport from "passport";
 
 const router = Router();
-//const manager = new ProductManager();
 
-//Renderizado con Handlebars
-
-// router.get("/products", async (request, response) => {
-//      //Recuperamos datos del manager
-//      const products = await manager.getProducts();
-//      response.render("index", { products });
-//  })
-
-router.get("/products", async (request, response) => {
+router.get("/products", passport.authenticate("current", {session:false}), role("user"), async (request, response) => {
     let page = request.query.page || 1;
     let limit = 3;
     try {
@@ -42,30 +35,17 @@ router.get("/products", async (request, response) => {
     }
 })
 
-
-//Renderizado Web socket
-
-//Renderizado de productos en tiempo real
-router.get("/realtimeproducts", async (request, response) => {
-    response.render("realtimeproducts");
+router.get("/realtimeproducts", passport.authenticate("current", {session:false}), role("admin") , async (request, response) => {
+    
+    try {
+        response.render("realtimeproducts");
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("Error al cargar productos");
+    }
+    
+    
 })
-
-//Renderizado del carrito
-// router.get("/carts", async (request, response) => {
-//     try {
-//         const cartId = request.query.cartId;
-//         const cart = await CartModel.findById(cartId).populate("products.product").lean();
-        
-//         if (!cart) {
-//             return response.status(404).send("Carrito no encontrado");
-//         }
-
-//         response.render("carts", {cart});
-//     } catch (error) {
-//         console.log(error);
-//         response.status(500).send("Error del servidor")
-//     }
-// })
 
 router.get("/carts/:cid", async (request, response) => {
     try {

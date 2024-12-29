@@ -1,4 +1,4 @@
-import userDao from "../dao/user.dao";
+import userDao from "../dao/user.dao.js";
 
 class UserRepository {
 
