@@ -136,4 +136,7 @@ router.post("/login", userController.login);
 router.post("/logout", userController.logout);
 router.get("/current", passport.authenticate("current", {session: false}), userController.current);
 
+//terminar esta ruta
+//router.post("/ticket", ticketController);
+
 export default router;
