@@ -13,19 +13,19 @@ class ProductManager {
 
     async getProductById(id) {
         const product = await ProductModel.findById(id);
-        if (!product) throw new Error("Not found");
+        if (!product) throw new Error("Producto no encontrado");
         return product;
     }
 
     async updateProduct(id, updatedProduct) {
         const productoActualizado = await ProductModel.findByIdAndUpdate(id, updatedProduct, { new: true });
-        if (!productoActualizado) throw new Error("Not found");
+        if (!productoActualizado) throw new Error("Producto no encontrado");
         return productoActualizado;
     }
 
     async deleteProduct(id) {
         const productoEliminado = await ProductModel.findByIdAndDelete(id);
-        if (!productoEliminado) throw new Error("Not found");
+        if (!productoEliminado) throw new Error("Producto no encontrado");
         return productoEliminado;
     }
 }

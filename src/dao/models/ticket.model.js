@@ -18,8 +18,7 @@ const ticketSchema = new mongoose.Schema({
         required: true
     },
     purchaser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        type: String,  
         required: true
     },
     cart: {
