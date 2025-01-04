@@ -3,8 +3,6 @@ import CartService from "../services/cart.service.js";
 class CartController {
     constructor() {
         this.cartService =  CartService;
-
-
     }
 
     // Crear un carrito

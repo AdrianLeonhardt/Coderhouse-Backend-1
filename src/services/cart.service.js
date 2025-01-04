@@ -1,6 +1,7 @@
 import CartRepository from "../repository/cart.repository.js";
 import CartDTO from "../dto/cart.dto.js";
 import CartModel from "../dao/models/cart.model.js";
+
 import UserModel from "../dao/models/user.model.js";
 
 import TicketModel from "../dao/models/ticket.model.js";
@@ -56,7 +57,6 @@ class CartService {
     //CODIGO OK
     async purchaseCart(cartId, purchaseData) {
     console.log("Procesando compra para el carrito ID:", cartId);
-    console.log("Datos de la compra:", purchaseData);
 
     const cart = await CartModel.findById(cartId).populate('products.product');
     if (!cart) {
@@ -78,7 +78,10 @@ class CartService {
         throw new Error("El monto total de la compra no es válido");
     }
 
-    const purchaserName = purchaseData.purchaser ? purchaseData.purchaser : "Desconocido";
+
+    const user = await UserModel.findOne({ cart: cartId });
+    // const purchaserName = purchaseData.purchaser ? purchaseData.purchaser : "Desconocido";
+    const purchaserName = user ? user.email : "Desconocido";
 
     const newTicket = new TicketModel({
         cart: cartId,  

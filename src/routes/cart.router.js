@@ -30,10 +30,9 @@ router.put("/:cid", (req, res) => cartController.updateCartProducts(req, res));
 
 // Ruta para finalizar la compra del carrito
 router.post('/:cid/purchase', async (req, res) => {
-    console.log("Ruta /carts/:cid/purchase recibida");
     try {
-        const cartId = req.params.cid;
-        console.log("Cart ID:", cartId);
+        // const cartId = req.params.cid;
+
         await cartController.purchaseCart(req, res); 
     } catch (error) {
         console.error("Error en la compra:", error);

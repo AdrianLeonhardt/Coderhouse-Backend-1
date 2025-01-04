@@ -2,6 +2,7 @@ import ticketService from '../services/ticket.service.js';
 
 class TicketController {
     async create(request, response) {
+        console.log("Datos recibidos en la solicitud para crear el ticket:", request.body);
         const { amount, purchaser, cartId } = request.body;
 
         try {

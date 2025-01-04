@@ -8,5 +8,7 @@ class TicketDTO {
     }
 }
 
-export { TicketDTO };
+// export { TicketDTO };
+
+export default TicketDTO;
 
