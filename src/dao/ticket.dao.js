@@ -1,13 +1,14 @@
 import TicketModel from "./models/ticket.model.js";
 
 class TicketDao {
-    async findById(id) {
-        return await TicketModel.findById(id).populate("purchaser").populate("cart");
-    }
 
-    async save(ticketData) {
+    async create(ticketData) {
         const ticket = new TicketModel(ticketData);
         return await ticket.save();
+    }
+
+    async getById(ticketId) {
+        return await TicketModel.findById(ticketId).populate('cart'); 
     }
 
 }

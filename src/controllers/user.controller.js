@@ -29,43 +29,6 @@ class UserController {
             response.status(500).send("Problema al registrar el usuario");
         }
 
-        // try {
-        //     const existingUser = await UserModel.findOne({ $or: [{ user }, { email }] });
-        //     if (existingUser) {
-        //         return response.status(400).send("El usuario o el email ya están registrados");
-        //     }
-
-        //     const newCart = new CartModel();
-        //     await newCart.save();
-
-        //     const newUser = new UserModel({
-        //         user,
-        //         email,
-        //         password: createHash(password),
-        //         cart: newCart._id
-        //     });
-
-        //     await newUser.save();
-
-        //     const token = jwt.sign({
-        //         user: newUser.user, 
-        //         email: newUser.email, 
-        //         rol: newUser.role,
-        //         cart: newUser.cart
-        //     }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
-
-        //     response.cookie("preEntregaToken", token, {
-        //         maxAge: 3600000,
-        //         httpOnly: true 
-        //     });
-
-        //     response.redirect("/api/sessions/current");
-
-        // } catch (error) {
-        //     console.error("Error al registrar el usuario:", error);
-        //     response.status(500).send("Problema al registrar el usuario");
-        // }
-
     }
 
     async login (request, response) {

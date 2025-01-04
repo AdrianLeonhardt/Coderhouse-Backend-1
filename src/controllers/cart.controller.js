@@ -3,6 +3,8 @@ import CartService from "../services/cart.service.js";
 class CartController {
     constructor() {
         this.cartService =  CartService;
+
+
     }
 
     // Crear un carrito
@@ -94,9 +96,21 @@ class CartController {
         }
     }
 
-    // Método para finalizar la compra
+    // // Método para finalizar la compra
     async purchaseCart(req, res) {
-        
+        const { cid } = req.params;  
+        try {
+            const result = await this.cartService.purchaseCart(cid, req.body); 
+            res.status(200).json({
+                message: "Compra realizada con éxito",
+                ticket: result.ticket  
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: "Error al procesar la compra",
+                error: error.message
+            });
+        }
     }
 }
 

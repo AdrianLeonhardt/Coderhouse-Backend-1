@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const ticketSchema = new mongoose.Schema({
     code: {
@@ -6,28 +6,28 @@ const ticketSchema = new mongoose.Schema({
         required: true,
         unique: true,
         default: function () {
-            return 'ticket' + Math.random().toString(36).substr(2, 9);
+            return 'ticket' + Math.random().toString(36).substring(2, 9);
         }
     },
     purchase_datetime: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     amount: {
         type: Number,
-        required: true
+        required: true,
     },
     purchaser: {
         type: String,  
-        required: true
+        required: true,
     },
     cart: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "carts",
-        required: true
+        ref: 'carts',
+        required: true,
     }
 });
 
-const TicketModel = mongoose.model("ticket", ticketSchema);
+const TicketModel = mongoose.model('ticket', ticketSchema);
 
 export default TicketModel;
