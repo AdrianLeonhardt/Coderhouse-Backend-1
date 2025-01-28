@@ -1,13 +1,9 @@
-//Aca ocultamos datos sensibles
-class UserDTO {
-    constructor(user) {
-        // this.id = user.id;
-        this.name = user.user;
-        this.email = user.email;
-        // this.password = user.password;
-        // this.role = user.role;
-        this.cart = user.cart;
+export default class UserDTO {
+    static getUserTokenFrom = (user) =>{
+        return {
+            name: `${user.first_name} ${user.last_name}`,
+            role: user.role,
+            email:user.email
+        }
     }
 }
-
-export default UserDTO;
